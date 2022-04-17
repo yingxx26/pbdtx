@@ -26,6 +26,7 @@ public class AccountInfoController {
         String tx_no = UUID.randomUUID().toString();
         AccountChangeEvent accountChangeEvent = new AccountChangeEvent(accountNo,amount,tx_no);
         //发送消息
+        log.info("==========================开始发送1");
         accountInfoService.sendUpdateAccountBalance(accountChangeEvent);
         return "转账成功";
     }

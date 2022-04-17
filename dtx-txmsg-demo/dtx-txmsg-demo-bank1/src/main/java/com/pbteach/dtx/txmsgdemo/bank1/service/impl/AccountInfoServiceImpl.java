@@ -4,6 +4,7 @@ import com.pbteach.dtx.txmsgdemo.bank1.dao.AccountInfoDao;
 import com.pbteach.dtx.txmsgdemo.bank1.model.AccountChangeEvent;
 import com.pbteach.dtx.txmsgdemo.bank1.service.AccountInfoService;
 import com.alibaba.fastjson.JSONObject;
+import com.pbteach.dtx.txmsgdemo.bank1.utils.EnDecryptUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,11 +33,12 @@ public class AccountInfoServiceImpl implements AccountInfoService {
     public void sendUpdateAccountBalance(AccountChangeEvent accountChangeEvent) {
 
         //将accountChangeEvent转成json
-        JSONObject jsonObject =new JSONObject();
-        jsonObject.put("accountChange",accountChangeEvent);
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("accountChange", accountChangeEvent);
         String jsonString = jsonObject.toJSONString();
+        String encryptAESStr = EnDecryptUtil.encryptAES(jsonString, "123");
         //生成message类型
-        Message<String> message = MessageBuilder.withPayload(jsonString).build();
+        Message<String> message = MessageBuilder.withPayload(encryptAESStr).build();
         //发送一条事务消息
         /**
          * String txProducerGroup 生产组
@@ -44,7 +46,7 @@ public class AccountInfoServiceImpl implements AccountInfoService {
          * Message<?> message, 消息内容
          * Object arg 参数
          */
-        rocketMQTemplate.sendMessageInTransaction("producer_group_txmsg_bank1","topic_txmsg",message,null);
+        rocketMQTemplate.sendMessageInTransaction("producer_group_txmsg_bank1", "topic_txmsg", message, null);
 
     }
 
@@ -53,14 +55,14 @@ public class AccountInfoServiceImpl implements AccountInfoService {
     @Transactional
     public void doUpdateAccountBalance(AccountChangeEvent accountChangeEvent) {
         //幂等判断
-        if(accountInfoDao.isExistTx(accountChangeEvent.getTxNo())>0){
-            return ;
+        if (accountInfoDao.isExistTx(accountChangeEvent.getTxNo()) > 0) {
+            return;
         }
         //扣减金额
-        accountInfoDao.updateAccountBalance(accountChangeEvent.getAccountNo(),accountChangeEvent.getAmount() * -1);
+        accountInfoDao.updateAccountBalance(accountChangeEvent.getAccountNo(), accountChangeEvent.getAmount() * -1);
         //添加事务日志
         accountInfoDao.addTx(accountChangeEvent.getTxNo());
-        if(accountChangeEvent.getAmount() == 3){
+        if (accountChangeEvent.getAmount() == 3) {
             throw new RuntimeException("人为制造异常");
         }
     }
