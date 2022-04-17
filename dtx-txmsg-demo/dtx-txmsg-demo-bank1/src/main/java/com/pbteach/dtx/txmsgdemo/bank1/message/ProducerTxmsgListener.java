@@ -55,7 +55,7 @@ public class ProducerTxmsgListener implements RocketMQLocalTransactionListener {
 
     }
 
-    //事务状态回查，查询是否扣减金额/   当第二步，即上面的代码由于消息队列网络异常的时候，执行下面
+    //事务状态回查，查询是否扣减金额/   当第二步，即上面的代码由于消息队列网络异常的时候（UNKNOWN），几十秒后执行下面
     @Override
     public RocketMQLocalTransactionState checkLocalTransaction(Message message) {
         log.info("==========================回查3");
