@@ -28,7 +28,7 @@ public class TxmsgConsumer implements RocketMQListener<String> {
         log.info("==========================消费4");
 
         String decryptAESStr = EnDecryptUtil.decryptAES(message, "123");
-        log.info("开始消费消息:{}",decryptAESStr);
+        log.info("BACkup开始消费消息:{}",decryptAESStr);
         //解析消息
         JSONObject jsonObject = JSONObject.parseObject(decryptAESStr);
         //解析消息

@@ -1,4 +1,4 @@
-启动rocketmq
+启动rocketmq（访问地址127.0.0.1:9876需要另外启动管理项目）
 cmd
 进入E:\rocketmq-all-4.4.0-bin-release\bin
 执行 start mqnamesrv.cmd

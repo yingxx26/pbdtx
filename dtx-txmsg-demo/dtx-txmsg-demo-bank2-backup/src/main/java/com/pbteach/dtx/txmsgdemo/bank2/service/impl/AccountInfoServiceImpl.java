@@ -23,7 +23,7 @@ public class AccountInfoServiceImpl implements AccountInfoService {
     @Override
     @Transactional
     public void addAccountInfoBalance(AccountChangeEvent accountChangeEvent) {
-        log.info("bank2更新本地账号，账号：{},金额：{}",accountChangeEvent.getAccountNo(),accountChangeEvent.getAmount());
+        log.info("bank2BACkup更新本地账号，账号：{},金额：{}",accountChangeEvent.getAccountNo(),accountChangeEvent.getAmount());
         if(accountInfoDao.isExistTx(accountChangeEvent.getTxNo())>0){
 
             return ;

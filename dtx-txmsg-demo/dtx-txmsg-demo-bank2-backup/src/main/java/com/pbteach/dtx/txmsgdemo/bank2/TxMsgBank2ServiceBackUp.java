@@ -5,10 +5,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class TxMsgBank2Service {
+public class TxMsgBank2ServiceBackUp {
 
 	public static void main(String[] args) {
-		SpringApplication.run(TxMsgBank2Service.class, args);
+		SpringApplication.run(TxMsgBank2ServiceBackUp.class, args);
 	}
 
 }
