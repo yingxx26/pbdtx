@@ -1,12 +1,12 @@
 启动rocketmq（访问地址127.0.0.1:9876需要另外启动管理项目）
 cmd
-进入E:\rocketmq-all-4.4.0-bin-release\bin
+进入D:\rocketmq-all-4.4.0-bin-release\bin
 执行 start mqnamesrv.cmd
 执行 start mqbroker.cmd -n 127.0.0.1:9876 autoCreateTopicEnable=true
 启动三个服务
 访问http://localhost:56081/bank1/transfer?accountNo=1&amount=1
 
-
+假如弹出提示框提示‘错误: 找不到或无法加载主类 xxxxxx’。打开runbroker.cmd，然后将‘%CLASSPATH%’加上英文双引号。保存并重新执行start语句。
 # pbdtx
 用于研究测试SpringCloud分布式事务控制解决方案，包括2PC、TCC、可靠消息最终一致性，最大努力通知，所用技术包括：Seata，Hmily，RocketMQ等
 

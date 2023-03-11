@@ -28,6 +28,7 @@ public class AccountInfoController {
         //发送消息
         log.info("==========================开始发送1");
         accountInfoService.sendUpdateAccountBalance(accountChangeEvent);
+        log.info("XXXXXXXXXXXXXXXXXX-AccountInfoController");
         return "转账成功";
     }
 }

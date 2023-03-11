@@ -36,6 +36,8 @@ public class ProducerTxmsgListener implements RocketMQLocalTransactionListener {
         log.info("==========================执行本地事务2");
 
         try {
+            Thread.sleep(30000);
+            log.info("XXXXXXXXXXXXXXXXXX-executeLocalTransaction");
             //解析message，转成AccountChangeEvent
             String messageString = new String((byte[]) message.getPayload());
             String decryptAESStr = EnDecryptUtil.decryptAES(messageString, "123");
